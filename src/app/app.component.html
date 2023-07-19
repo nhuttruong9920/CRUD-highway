@@ -1,56 +1,87 @@
-<h1>Danh Sách Tuyến Cao Tốc</h1> <p>{{highwaysAmount}}</p>
-<label for="name">Name:</label>
-<input type="text" id="name" [(ngModel)]="newHighway.name" required />
+<div class="flex flex-col gap-8 m-16">
+  <!-- Header -->
+  <div class="flex gap-3 items-center">
+    <h1 class="text-2xl font-semibold">Danh Sách Tuyến Cao Tốc</h1>
+    <span class="bg-blue-600 text-white text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full">
+      {{highwaysAmount}}
+    </span>
+  </div>
 
-<label for="maxSpeed">Max Speed:</label>
-<input type="number" id="maxSpeed" [(ngModel)]="newHighway.maxSpeed" required />
+  <!-- Search & Create new button-->
+  <div class="flex justify-between">
+    <input type="text" id="first_name"
+      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      placeholder="Tìm kiếm" required>
+    <button class="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded">
+      Thêm mới
+    </button>
+  </div>
 
-<label for="description">Description:</label>
-<input type="text" id="description" [(ngModel)]="newHighway.description" required>
-<label for="status">Status:</label>
-<select id="status" [(ngModel)]="newHighway.inactive" required>
-  <option value="">Select Status</option>
-  <option value="true">Active</option>
-  <option value="false">Inactive</option>
-</select>
-<button (click)="onCreateAHighway()" type="submit">Add</button>
+  <!-- Create new modal -->
+  <div> <label for="name">Name:</label>
+    <input type="text" id="name" [(ngModel)]="newHighway.name" required />
 
-<table>
-  <tr>
-    <th>Tên cao tốc</th>
-    <th>Tốc độ tối đa</th>
-    <th>Mô tả</th>
-    <th>Trạng thái</th>
-    <th></th>
-  </tr>
-  <tr *ngFor="let highway of highways">
-    <td>{{highway.name}}</td>
-    <td>{{highway.maxSpeed}}</td>
-    <td>{{highway.description}}</td>
-    <td *ngIf="highway.inactive; else elseBlock">Hoạt động</td>
-    <ng-template #elseBlock>
-      <td>Không hoạt động</td>
-    </ng-template>
-    <td>
-      <button (click)="onGetAHighway(highway.id)">Edit</button>
-      <button (click)="onDeleteAHighway(highway.id)">Delete</button>
-    </td>
-  </tr>
-</table>
+    <label for="maxSpeed">Max Speed:</label>
+    <input type="number" id="maxSpeed" [(ngModel)]="newHighway.maxSpeed" required />
 
-<label for="name">Name:</label>
-<input type="text" id="name" [(ngModel)]="selectedHighway.name" required />
+    <label for="description">Description:</label>
+    <input type="text" id="description" [(ngModel)]="newHighway.description" required>
+    <label for="status">Status:</label>
+    <select id="status" [(ngModel)]="newHighway.inactive" required>
+      <option value="">Select Status</option>
+      <option value="true">Active</option>
+      <option value="false">Inactive</option>
+    </select>
+    <button (click)="onCreateAHighway()" type="submit">Add</button>
+  </div>
 
-<label for="maxSpeed">Max Speed:</label>
-<input type="number" id="maxSpeed" [(ngModel)]="selectedHighway.maxSpeed" required />
+  <!-- Table highway data list -->
+  <table class="table-auto">
+    <tr>
+      <th class="border text-left px-2 py-2 bg-blue-300">Tên cao tốc</th>
+      <th class="border text-left px-2 py-2 bg-blue-300">Tốc độ tối đa</th>
+      <th class="border text-left px-2 py-2 bg-blue-300">Mô tả</th>
+      <th class="border text-left px-2 py-2 bg-blue-300">Trạng thái</th>
+      <th class="border text-left px-2 py-2 bg-blue-300"></th>
+    </tr>
+    <tr *ngFor="let highway of highways">
+      <td class="border text-left">{{highway.name}}</td>
+      <td class="border text-left">{{highway.maxSpeed}}</td>
+      <td class="border text-left">{{highway.description}}</td>
+      <td class="border text-left" *ngIf="highway.inactive; else elseBlock"><span
+          class="text-black mr-2 px-2.5 py-0.5 rounded active-badge">
+          Hoạt động
+        </span></td>
+      <ng-template #elseBlock>
+        <td class="border text-left"><span class="text-black mr-2 px-2.5 py-0.5 rounded inactive-badge">
 
-<label for="description">Description:</label>
-<input type="text" id="description" [(ngModel)]="selectedHighway.description" required>
+            Không Hoạt động
+          </span></td>
+      </ng-template>
+      <td class="border text-left">
+        <button (click)="onGetAHighway(highway.id)">Edit</button>
+        <button (click)="onDeleteAHighway(highway.id)">Delete</button>
+      </td>
+    </tr>
+  </table>
 
-<label for="status">Status:</label>
-<select id="status" [(ngModel)]="selectedHighway.inactive" required>
-  <option value="">Select Status</option>
-  <option value="true">Active</option>
-  <option value="false">Inactive</option>
-</select>
-<button (click)="onUpdateAHighway()" type="submit">Update</button>
+  <!-- Edit modal -->
+  <div>
+    <label for="name">Name:</label>
+    <input type="text" id="name" [(ngModel)]="selectedHighway.name" required />
+
+    <label for="maxSpeed">Max Speed:</label>
+    <input type="number" id="maxSpeed" [(ngModel)]="selectedHighway.maxSpeed" required />
+
+    <label for="description">Description:</label>
+    <input type="text" id="description" [(ngModel)]="selectedHighway.description" required>
+
+    <label for="status">Status:</label>
+    <select id="status" [(ngModel)]="selectedHighway.inactive" required>
+      <option value="">Select Status</option>
+      <option value="true">Active</option>
+      <option value="false">Inactive</option>
+    </select>
+    <button (click)="onUpdateAHighway()" type="submit">Update</button>
+  </div>
+</div>

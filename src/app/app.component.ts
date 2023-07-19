@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Highway } from './highway.model';
 import { HighwayService } from './highway.service';
-
+import { initFlowbite } from 'flowbite';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +17,7 @@ export class AppComponent {
   constructor(private highwayService: HighwayService) {}
   //get all highways
   ngOnInit() {
+    initFlowbite();
     this.highwayService.getAllHighways().subscribe((res: any) => {
       this.highways = res.data.items;
       this.highwaysAmount = res.data.totalCount;
