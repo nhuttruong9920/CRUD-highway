@@ -38,7 +38,7 @@ export class AppComponent {
 
   //search highway
   onSearchHighways() {
-    this.body.keyword = this.newBodyKeyword;
+    this.body.keyword = this.newBodyKeyword.trim();
     this.onGetAllHighways();
   }
 
@@ -70,12 +70,60 @@ export class AppComponent {
     this.onGetAllHighways();
   }
 
-  //
+  //next page
   onNextPage() {
     if (this.body.pageIndex < this.pageIndexCount) {
       this.body.pageIndex = this.body.pageIndex + 1;
     }
     this.onGetAllHighways();
+  }
+
+  //sorting
+  onSort(sortString: string) {
+    switch (sortString) {
+      case 'name':
+        if (this.body.sorting === '') {
+          this.body.sorting = 'name asc';
+        } else if (this.body.sorting.includes('asc')) {
+          this.body.sorting = 'name desc';
+        } else if (this.body.sorting.includes('desc')) {
+          this.body.sorting = '';
+        }
+        this.onGetAllHighways();
+        break;
+      case 'speed':
+        if (this.body.sorting === '') {
+          this.body.sorting = 'maxSpeed asc';
+        } else if (this.body.sorting.includes('asc')) {
+          this.body.sorting = 'maxSpeed desc';
+        } else if (this.body.sorting.includes('desc')) {
+          this.body.sorting = '';
+        }
+        this.onGetAllHighways();
+        break;
+      case 'description':
+        if (this.body.sorting === '') {
+          this.body.sorting = 'description asc';
+        } else if (this.body.sorting.includes('asc')) {
+          this.body.sorting = 'description desc';
+        } else if (this.body.sorting.includes('desc')) {
+          this.body.sorting = '';
+        }
+        this.onGetAllHighways();
+        break;
+      case 'status':
+        if (this.body.sorting === '') {
+          this.body.sorting = 'inactive asc';
+        } else if (this.body.sorting.includes('asc')) {
+          this.body.sorting = 'inactive desc';
+        } else if (this.body.sorting.includes('desc')) {
+          this.body.sorting = '';
+        }
+        this.onGetAllHighways();
+        break;
+    }
+
+    console.log(this.body.sorting);
   }
 
   //get all highways

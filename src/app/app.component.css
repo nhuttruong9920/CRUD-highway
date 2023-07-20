@@ -23,7 +23,7 @@
 
 table{
     overflow-x:scroll;
-    /* white-space: nowrap; */
+    table-layout:fixed;
     word-wrap: break-word;
 }
 

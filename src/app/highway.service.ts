@@ -7,7 +7,8 @@ import { Highway } from './highway.model';
   providedIn: 'root',
 })
 export class HighwayService {
-  private apiUrl = 'http://192.168.38.156:7002/highway';
+  // private apiUrl = 'http://192.168.38.156:7002/highway';
+  private apiUrl = 'http://115.73.208.125:7000/highway';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'Application/json' }),
@@ -15,8 +16,8 @@ export class HighwayService {
 
   constructor(private httpClient: HttpClient) {}
 
-  getAllHighways(body:any): Observable<''> {
-    return this.httpClient.post<''>(this.apiUrl + '/getall/', body);
+  getAllHighways(body: any): Observable<''> {
+    return this.httpClient.post<''>(this.apiUrl + '/getall', body);
   }
 
   getHighwayByID(id: string): Observable<Highway> {
@@ -24,11 +25,11 @@ export class HighwayService {
   }
 
   createANewHighway(highway: Highway): Observable<Highway> {
-    return this.httpClient.post<Highway>(this.apiUrl + '/create/', highway);
+    return this.httpClient.post<Highway>(this.apiUrl + '/create', highway);
   }
 
   updateAHighway(highway: Highway): Observable<Highway> {
-    return this.httpClient.put<Highway>(this.apiUrl + '/update/', highway);
+    return this.httpClient.put<Highway>(this.apiUrl + '/update', highway);
   }
 
   deleteAHighway(id: string) {

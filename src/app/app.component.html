@@ -105,11 +105,59 @@
   <div class="tableFixHead">
     <table class="table-auto w-full">
       <tr>
-        <th class="border text-left p-td bg-blue-200">Tên cao tốc</th>
-        <th class="border text-left p-td bg-blue-200">Tốc độ tối đa</th>
-        <th class="border text-left p-td bg-blue-200">Mô tả</th>
-        <th class="border text-left p-td bg-blue-200">Trạng thái</th>
-        <th class="border text-left p-td bg-blue-200"></th>
+        <th class="border text-left p-td bg-blue-200" style="width:20%">
+          <div class="flex items-center gap-2">
+            <p class="inline-block">Tên cao tốc</p>
+            <div class="z-100 text-blue-200 hover:text-gray-500 cursor-pointer" (click)="onSort('name')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="tabler-icon tabler-icon-arrows-sort">
+                <path d="M3 9l4 -4l4 4m-4 -4v14"></path>
+                <path d="M21 15l-4 4l-4 -4m4 4v-14"></path>
+              </svg>
+            </div>
+          </div>
+        </th>
+        <th class="border text-left p-td bg-blue-200" style="width:10%">
+          <div class="flex items-center gap-2">
+            <p class="inline-block">Tốc độ tối đa</p>
+            <div class="z-100 text-blue-200 hover:text-gray-500 cursor-pointer" (click)="onSort('speed')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="tabler-icon tabler-icon-arrows-sort">
+                <path d="M3 9l4 -4l4 4m-4 -4v14"></path>
+                <path d="M21 15l-4 4l-4 -4m4 4v-14"></path>
+              </svg>
+            </div>
+          </div>
+        </th>
+        <th class="border text-left p-td bg-blue-200" style="width:50%">
+          <div class="flex items-center gap-2">
+            <p class="inline-block">Mô tả</p>
+            <div class="z-100 text-blue-200 hover:text-gray-500 cursor-pointer" (click)="onSort('description')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="tabler-icon tabler-icon-arrows-sort">
+                <path d="M3 9l4 -4l4 4m-4 -4v14"></path>
+                <path d="M21 15l-4 4l-4 -4m4 4v-14"></path>
+              </svg>
+            </div>
+          </div>
+        </th>
+        <th class="border text-left p-td bg-blue-200" style="width:15%">
+          <div class="flex items-center gap-2">
+            <p class="inline-block">Trạng thái</p>
+            <div class="z-100 text-blue-200 hover:text-gray-500 cursor-pointer" (click)="onSort('status')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="tabler-icon tabler-icon-arrows-sort">
+                <path d="M3 9l4 -4l4 4m-4 -4v14"></path>
+                <path d="M21 15l-4 4l-4 -4m4 4v-14"></path>
+              </svg>
+            </div>
+          </div>
+        </th>
+        <th class="border text-left p-td bg-blue-200" style="width:5%"></th>
       </tr>
       <tr *ngFor="let highway of highways,let i = index">
         <td class="border text-left p-td tdname">{{highway.name}}</td>
@@ -126,7 +174,7 @@
             </span></td>
         </ng-template>
         <td class="border text-left">
-          <div class="flex gap-3 p-td justify-around m-auto">
+          <div class="flex gap-1 p-td justify-around">
             <button (click)="onOpenUpdateModal(highway.id)"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true" width="20">
                 <path stroke-linecap="round" stroke-linejoin="round"
