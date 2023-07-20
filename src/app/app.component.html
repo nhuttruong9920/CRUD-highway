@@ -1,4 +1,4 @@
-<div class="flex flex-col gap-8 m-16">
+<div class="flex flex-col gap-4 m-12">
   <!-- Header -->
   <div class="flex gap-3 items-center">
     <h1 class="text-2xl font-semibold">Danh Sách Tuyến Cao Tốc</h1>
@@ -10,78 +10,226 @@
   <!-- Search & Create new button-->
   <div class="flex justify-between">
     <input type="text" id="first_name"
-      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
       placeholder="Tìm kiếm" required>
-    <button class="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded">
+    <button data-modal-target="createModal" data-modal-toggle="createModal"
+      class="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded">
       Thêm mới
     </button>
   </div>
 
-  <!-- Create new modal -->
-  <div> <label for="name">Name:</label>
-    <input type="text" id="name" [(ngModel)]="newHighway.name" required />
+  <!-- Create new Modal -->
+  <div id="createModal" tabindex="-1" aria-hidden="true"
+    class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative w-full max-w-2xl max-h-full">
+      <!-- Modal content -->
+      <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+        <!-- Modal header -->
+        <div class="flex items-start justify-between px-8 py-4 rounded-t dark:border-gray-600">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+            THÊM TUYẾN CAO TỐC
+          </h3>
+          <button type="button"
+            class="text-black bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-sm text-sm w-5 h-5 ml-auto inline-flex justify-center items-center bg-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+            data-modal-hide="createModal">
+            <svg class="w-2 h-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+            </svg>
+            <span class="sr-only">Close modal</span>
+          </button>
+        </div>
+        <!-- Modal body -->
+        <div class="flex flex-col gap-5 px-8 py-4">
+          <div class="flex flex-col gap-1">
+            <label for="name">Tên cao tốc <span class="text-red-600">*</span></label>
+            <input type="text" id="name" [(ngModel)]="newHighway.name" placeholder="Tên cao tốc"
+              class="border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-full"
+              required />
+          </div>
 
-    <label for="maxSpeed">Max Speed:</label>
-    <input type="number" id="maxSpeed" [(ngModel)]="newHighway.maxSpeed" required />
+          <div class="flex flex-col gap-1">
+            <label for="maxSpeed">Tốc độ tối đa <span class="text-red-600">*</span></label>
+            <input type="number" id="maxSpeed" [(ngModel)]="newHighway.maxSpeed" placeholder="Tốc độ tối đa"
+              class="border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-full"
+              required />
+          </div>
 
-    <label for="description">Description:</label>
-    <input type="text" id="description" [(ngModel)]="newHighway.description" required>
-    <label for="status">Status:</label>
-    <select id="status" [(ngModel)]="newHighway.inactive" required>
-      <option value="">Select Status</option>
-      <option value="true">Active</option>
-      <option value="false">Inactive</option>
-    </select>
-    <button (click)="onCreateAHighway()" type="submit">Add</button>
+          <div class="flex flex-col gap-1">
+            <label for="description">Thông tin mô tả: <span class="text-red-600">*</span></label>
+            <input type="text" id="description" [(ngModel)]="newHighway.description" placeholder="Thông tin mô tả"
+              class="border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-full"
+              required>
+          </div>
+
+          <div class="flex flex-col gap-1">
+            <label for="status">Trạng thái <span class="text-red-600">*</span></label>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input id="status" [(ngModel)]="newHighway.inactive" type="checkbox" value="true" class="sr-only peer">
+              <div
+                class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
+              </div>
+              <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Hoạt động</span>
+            </label>
+          </div>
+        </div>
+        <!-- Modal footer -->
+        <div class="flex items-center p-6 space-x-2 border-gray-200 rounded-b dark:border-gray-600 justify-end">
+          <button data-modal-hide="createModal" type="button"
+            class="text-blue-700 bg-white hover:bg-blue-100 focus:ring-4 focus:outline-none focus:ring-blue-300 text-sm font-medium px-5 py-2.5 hover:text-blue-700 focus:z-10 hover:rounded-md dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Huỷ
+            bỏ</button>
+          <button data-modal-hide="createModal" type="submit" (click)="onCreateAHighway()"
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Thêm
+            mới</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Table highway data list -->
-  <table class="table-auto">
-    <tr>
-      <th class="border text-left px-2 py-2 bg-blue-300">Tên cao tốc</th>
-      <th class="border text-left px-2 py-2 bg-blue-300">Tốc độ tối đa</th>
-      <th class="border text-left px-2 py-2 bg-blue-300">Mô tả</th>
-      <th class="border text-left px-2 py-2 bg-blue-300">Trạng thái</th>
-      <th class="border text-left px-2 py-2 bg-blue-300"></th>
-    </tr>
-    <tr *ngFor="let highway of highways">
-      <td class="border text-left">{{highway.name}}</td>
-      <td class="border text-left">{{highway.maxSpeed}}</td>
-      <td class="border text-left">{{highway.description}}</td>
-      <td class="border text-left" *ngIf="highway.inactive; else elseBlock"><span
-          class="text-black mr-2 px-2.5 py-0.5 rounded active-badge">
-          Hoạt động
-        </span></td>
-      <ng-template #elseBlock>
-        <td class="border text-left"><span class="text-black mr-2 px-2.5 py-0.5 rounded inactive-badge">
-
-            Không Hoạt động
+  <div class="tableFixHead">
+    <table class="table-auto w-full">
+      <tr>
+        <th class="border text-left p-10px bg-blue-300">Tên cao tốc</th>
+        <th class="border text-left p-10px bg-blue-300">Tốc độ tối đa</th>
+        <th class="border text-left p-10px bg-blue-300">Mô tả</th>
+        <th class="border text-left p-10px bg-blue-300">Trạng thái</th>
+        <th class="border text-left p-10px bg-blue-300"></th>
+      </tr>
+      <tr *ngFor="let highway of highways,let i = index">
+        <td class="border text-left p-10px">{{highway.name}}</td>
+        <td class="border text-left p-10px">{{highway.maxSpeed}}</td>
+        <td class="border text-left p-10px">{{highway.description}}</td>
+        <td class="border text-left p-10px" *ngIf="highway.inactive; else elseBlock"><span
+            class="text-black mr-2 px-2.5 py-0.5 rounded active-badge">
+            Hoạt động
           </span></td>
-      </ng-template>
-      <td class="border text-left">
-        <button (click)="onGetAHighway(highway.id)">Edit</button>
-        <button (click)="onDeleteAHighway(highway.id)">Delete</button>
-      </td>
-    </tr>
-  </table>
+        <ng-template #elseBlock>
+          <td class="border text-left p-10px whitespace-nowrap"><span
+              class="text-black mr-2 px-2.5 py-0.5 rounded inactive-badge">
+              Không Hoạt động
+            </span></td>
+        </ng-template>
+        <td class="border text-left">
+          <div class="flex gap-3 p-10px justify-around m-auto">
+            <button (click)="onOpenUpdateModal(highway.id)"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true" width="20">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125">
+                </path>
+              </svg></button>
+            <button (click)="onOpenDeleteModal(highway.id)">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" aria-hidden="true" color="red" width="20">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0">
+                </path>
+              </svg>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
 
-  <!-- Edit modal -->
-  <div>
-    <label for="name">Name:</label>
-    <input type="text" id="name" [(ngModel)]="selectedHighway.name" required />
+  <!-- Update Highway Modal -->
+  <div *ngIf="updateModalOn">
+    <div class="backdrop" (click)="onToggleUpdateModal()"></div>
+    <div class="z-50 fixed m-auto top-1/4 flex flex-col gap-24 left-0 right-0 w-4/12">
+      <div class="bg-white rounded-lg shadow dark:bg-gray-700">
+        <div class="flex items-start justify-between px-8 py-4 rounded-t dark:border-gray-600">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+            CHỈNH SỬA TUYẾN CAO TỐC
+          </h3>
+          <button type="button" (click)="onToggleUpdateModal()"
+            class="text-black bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-sm text-sm w-5 h-5 ml-auto inline-flex justify-center items-center bg-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">
+            <svg class="w-2 h-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+            </svg>
+            <span class="sr-only">Close modal</span>
+          </button>
+        </div>
+        <div class="flex flex-col gap-5 px-8 py-4">
+          <div class="flex flex-col gap-1">
+            <label for="name">Tên cao tốc <span class="text-red-600">*</span></label>
+            <input type="text" id="name" [(ngModel)]="selectedHighway.name" placeholder="Tên cao tốc"
+              class="border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-full"
+              required />
+          </div>
 
-    <label for="maxSpeed">Max Speed:</label>
-    <input type="number" id="maxSpeed" [(ngModel)]="selectedHighway.maxSpeed" required />
+          <div class="flex flex-col gap-1">
+            <label for="maxSpeed">Tốc độ tối đa <span class="text-red-600">*</span></label>
+            <input type="number" id="maxSpeed" [(ngModel)]="selectedHighway.maxSpeed" placeholder="Tốc độ tối đa"
+              class="border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-full"
+              required />
+          </div>
 
-    <label for="description">Description:</label>
-    <input type="text" id="description" [(ngModel)]="selectedHighway.description" required>
+          <div class="flex flex-col gap-1">
+            <label for="description">Thông tin mô tả: <span class="text-red-600">*</span></label>
+            <input type="text" id="description" [(ngModel)]="selectedHighway.description" placeholder="Thông tin mô tả"
+              class="border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-full"
+              required>
+          </div>
 
-    <label for="status">Status:</label>
-    <select id="status" [(ngModel)]="selectedHighway.inactive" required>
-      <option value="">Select Status</option>
-      <option value="true">Active</option>
-      <option value="false">Inactive</option>
-    </select>
-    <button (click)="onUpdateAHighway()" type="submit">Update</button>
+          <div class="flex flex-col gap-1">
+            <label for="status">Trạng thái <span class="text-red-600">*</span></label>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input id="status" [(ngModel)]="selectedHighway.inactive" type="checkbox" value="true"
+                class="sr-only peer">
+              <div
+                class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
+              </div>
+              <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Hoạt động</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="flex items-center p-6 space-x-2 border-gray-200 rounded-b dark:border-gray-600 justify-end">
+          <button type="button" (click)="onToggleUpdateModal()"
+            class="text-blue-700 bg-white hover:bg-blue-100 focus:ring-4 focus:outline-none focus:ring-blue-300 text-sm font-medium px-5 py-2.5 hover:text-blue-700 focus:z-10 hover:rounded-md dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Huỷ
+            bỏ</button>
+          <button type="submit" (click)="onUpdateAHighway()"
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Cập
+            nhật</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Highway Modal -->
+  <div *ngIf="deleteModalOn">
+    <div class="backdrop" (click)="onToggleDeleteModal()"></div>
+    <div class="z-50 fixed m-auto top-1/4 flex flex-col gap-24 left-0 right-0 w-4/12">
+      <div class="bg-white rounded-lg shadow dark:bg-gray-700">
+        <div class="flex items-start justify-between px-8 py-4 rounded-t dark:border-gray-600">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+            XOÁ CAO TỐC
+          </h3>
+
+          <button type="button" (click)="onToggleDeleteModal()"
+            class="text-black bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-sm text-sm w-5 h-5 ml-auto inline-flex justify-center items-center bg-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">
+            <svg class="w-2 h-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+            </svg>
+            <span class="sr-only">Close modal</span>
+          </button>
+        </div>
+
+        <div class="flex flex-col gap-5 px-8 py-4">
+          <h4>Bạn có chắc muốn xoá tuyến cao tốc này?</h4>
+        </div>
+
+        <div class="flex items-center p-6 space-x-2 border-gray-200 rounded-b dark:border-gray-600 justify-start">
+          <button type="submit" (click)="onDeleteAHighway()"
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Xoá
+            cao tốc</button>
+          <button type="button" (click)="onToggleDeleteModal()"
+            class="text-blue-700 bg-white hover:bg-blue-100 focus:ring-4 focus:outline-none focus:ring-blue-300 text-sm font-medium px-5 py-2.5 hover:text-blue-700 focus:z-10 hover:rounded-md dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Huỷ
+            bỏ</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

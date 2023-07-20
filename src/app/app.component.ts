@@ -11,13 +11,18 @@ import { initFlowbite } from 'flowbite';
 export class AppComponent {
   highways: Highway[] = [];
   highwaysAmount: number = 0;
-  newHighway: Highway = new Highway('', 120, '', true, '');
-  selectedHighway: Highway = new Highway('', 0, '', true, '');
+  newHighway: Highway = new Highway('', NaN, '', true, '');
+  selectedHighway: Highway = new Highway('', NaN, '', true, '');
+  updateModalOn = false;
+  deleteModalOn = false;
 
   constructor(private highwayService: HighwayService) {}
-  //get all highways
   ngOnInit() {
     initFlowbite();
+    this.onGetAllHighways();
+  }
+  //get all highways
+  onGetAllHighways() {
     this.highwayService.getAllHighways().subscribe((res: any) => {
       this.highways = res.data.items;
       this.highwaysAmount = res.data.totalCount;
@@ -41,8 +46,9 @@ export class AppComponent {
         console.log(
           'A new highway has been created successfully!' + JSON.stringify(res)
         );
+        this.onGetAllHighways();
       });
-    this.newHighway = new Highway('', 120, '', true, '');
+    this.newHighway = new Highway('', NaN, '', true, '');
   }
 
   //update a highway
@@ -51,14 +57,37 @@ export class AppComponent {
       .updateAHighway(this.selectedHighway)
       .subscribe((res: any) => {
         console.log('This highway has been updated successfully!');
+        this.onGetAllHighways();
       });
+    this.onToggleUpdateModal();
   }
 
   //delete a highway by Id
-  onDeleteAHighway(id: string) {
+  onDeleteAHighway() {
+    let id = this.selectedHighway.id;
     this.highwayService.deleteAHighway(id).subscribe((res: any) => {
       this.highways = this.highways.filter((highway) => highway.id !== id);
       console.log('This highway has been deleted successfully!');
+      this.onGetAllHighways();
     });
+    this.onToggleDeleteModal();
+  }
+
+  onToggleUpdateModal() {
+    this.updateModalOn = !this.updateModalOn;
+  }
+
+  onOpenUpdateModal(id: string) {
+    this.onToggleUpdateModal();
+    this.onGetAHighway(id);
+  }
+
+  onToggleDeleteModal() {
+    this.deleteModalOn = !this.deleteModalOn;
+  }
+
+  onOpenDeleteModal(id: string) {
+    this.onToggleDeleteModal();
+    this.onGetAHighway(id);
   }
 }
