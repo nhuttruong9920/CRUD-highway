@@ -14,16 +14,9 @@ export class HighwayService {
   };
 
   constructor(private httpClient: HttpClient) {}
-  body = {
-    maxPageSize: 30,
-    pageIndex: 0,
-    pageSize: 30,
-    keyword: '',
-    sorting: '',
-  };
 
-  getAllHighways(): Observable<''> {
-    return this.httpClient.post<''>(this.apiUrl + '/getall/', this.body);
+  getAllHighways(body:any): Observable<''> {
+    return this.httpClient.post<''>(this.apiUrl + '/getall/', body);
   }
 
   getHighwayByID(id: string): Observable<Highway> {

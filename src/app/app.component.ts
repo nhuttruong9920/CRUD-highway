@@ -16,16 +16,80 @@ export class AppComponent {
   updateModalOn = false;
   deleteModalOn = false;
 
+  body = {
+    maxPageSize: 15,
+    pageIndex: 1,
+    pageSize: 100,
+    keyword: '',
+    sorting: '',
+  };
+
+  pageIndexCount = 0;
+  pageIndexArray: number[] = [];
+  newMaxPageSize = 15;
+  newBodyKeyword = '';
+
   constructor(private highwayService: HighwayService) {}
+
   ngOnInit() {
     initFlowbite();
     this.onGetAllHighways();
   }
+
+  //search highway
+  onSearchHighways() {
+    this.body.keyword = this.newBodyKeyword;
+    this.onGetAllHighways();
+  }
+
+  //reset keyword
+  onResetKeyword() {
+    this.newBodyKeyword = '';
+    this.body.keyword = '';
+    this.onGetAllHighways();
+  }
+
+  //change hiển thị dòng/trang
+  onChangePageSize() {
+    this.body.maxPageSize = this.newMaxPageSize;
+    this.body.pageIndex = 1;
+    this.onGetAllHighways();
+  }
+
+  //change page
+  onChangePage(pageNumber: number) {
+    this.body.pageIndex = pageNumber;
+    this.onGetAllHighways();
+  }
+
+  //previous page
+  onPreviousPage() {
+    if (this.body.pageIndex > 1) {
+      this.body.pageIndex = this.body.pageIndex - 1;
+    }
+    this.onGetAllHighways();
+  }
+
+  //
+  onNextPage() {
+    if (this.body.pageIndex < this.pageIndexCount) {
+      this.body.pageIndex = this.body.pageIndex + 1;
+    }
+    this.onGetAllHighways();
+  }
+
   //get all highways
   onGetAllHighways() {
-    this.highwayService.getAllHighways().subscribe((res: any) => {
+    this.highwayService.getAllHighways(this.body).subscribe((res: any) => {
       this.highways = res.data.items;
       this.highwaysAmount = res.data.totalCount;
+      this.pageIndexCount = Math.floor(
+        this.highwaysAmount / this.body.maxPageSize + 1
+      );
+      this.pageIndexArray = Array.from(
+        { length: this.pageIndexCount },
+        (_, i) => i + 1
+      );
       console.log('----Get Highways List----');
     });
   }

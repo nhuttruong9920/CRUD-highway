@@ -9,22 +9,39 @@
 
   <!-- Search & Create new button-->
   <div class="flex justify-between">
-    <input type="text" id="first_name"
-      class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-      placeholder="Tìm kiếm" required>
+    <div class="relative">
+      <input type="text" id="first_name" [(ngModel)]="newBodyKeyword" (ngModelChange)="onSearchHighways()"
+        class="w-60 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        placeholder="Tìm kiếm">
+
+      <button *ngIf="!newBodyKeyword; else elseBlock" class="absolute right-1 top-1/4 " type="submit"
+        (click)="onSearchHighways()"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+          fill="none" stroke="#5E76A1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          class="tabler-icon tabler-icon-search">
+          <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
+          <path d="M21 21l-6 -6"></path>
+        </svg></button>
+
+      <ng-template #elseBlock>
+        <button (click)="onResetKeyword()" class="absolute right-1 top-1/4"><svg xmlns="http://www.w3.org/2000/svg"
+            width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5E76A1" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" class="cursor-pointer">
+            <path d="M18 6l-12 12"></path>
+            <path d="M6 6l12 12"></path>
+          </svg></button>
+      </ng-template>
+    </div>
     <button data-modal-target="createModal" data-modal-toggle="createModal"
       class="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded">
       Thêm mới
     </button>
   </div>
 
-  <!-- Create new Modal -->
+  <!-- Create Highway Modal -->
   <div id="createModal" tabindex="-1" aria-hidden="true"
     class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
     <div class="relative w-full max-w-2xl max-h-full">
-      <!-- Modal content -->
       <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-        <!-- Modal header -->
         <div class="flex items-start justify-between px-8 py-4 rounded-t dark:border-gray-600">
           <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
             THÊM TUYẾN CAO TỐC
@@ -39,7 +56,6 @@
             <span class="sr-only">Close modal</span>
           </button>
         </div>
-        <!-- Modal body -->
         <div class="flex flex-col gap-5 px-8 py-4">
           <div class="flex flex-col gap-1">
             <label for="name">Tên cao tốc <span class="text-red-600">*</span></label>
@@ -73,7 +89,6 @@
             </label>
           </div>
         </div>
-        <!-- Modal footer -->
         <div class="flex items-center p-6 space-x-2 border-gray-200 rounded-b dark:border-gray-600 justify-end">
           <button data-modal-hide="createModal" type="button"
             class="text-blue-700 bg-white hover:bg-blue-100 focus:ring-4 focus:outline-none focus:ring-blue-300 text-sm font-medium px-5 py-2.5 hover:text-blue-700 focus:z-10 hover:rounded-md dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Huỷ
@@ -86,32 +101,32 @@
     </div>
   </div>
 
-  <!-- Table highway data list -->
+  <!-- Table Highway Data List -->
   <div class="tableFixHead">
     <table class="table-auto w-full">
       <tr>
-        <th class="border text-left p-10px bg-blue-300">Tên cao tốc</th>
-        <th class="border text-left p-10px bg-blue-300">Tốc độ tối đa</th>
-        <th class="border text-left p-10px bg-blue-300">Mô tả</th>
-        <th class="border text-left p-10px bg-blue-300">Trạng thái</th>
-        <th class="border text-left p-10px bg-blue-300"></th>
+        <th class="border text-left p-td bg-blue-200">Tên cao tốc</th>
+        <th class="border text-left p-td bg-blue-200">Tốc độ tối đa</th>
+        <th class="border text-left p-td bg-blue-200">Mô tả</th>
+        <th class="border text-left p-td bg-blue-200">Trạng thái</th>
+        <th class="border text-left p-td bg-blue-200"></th>
       </tr>
       <tr *ngFor="let highway of highways,let i = index">
-        <td class="border text-left p-10px">{{highway.name}}</td>
-        <td class="border text-left p-10px">{{highway.maxSpeed}}</td>
-        <td class="border text-left p-10px">{{highway.description}}</td>
-        <td class="border text-left p-10px" *ngIf="highway.inactive; else elseBlock"><span
-            class="text-black mr-2 px-2.5 py-0.5 rounded active-badge">
+        <td class="border text-left p-td tdname">{{highway.name}}</td>
+        <td class="border text-left p-td tdspeed">{{highway.maxSpeed}}</td>
+        <td class="border text-left p-td tddesc">{{highway.description}}</td>
+        <td class="border text-left p-td tdaction" *ngIf="highway.inactive; else elseBlock"><span
+            class="text-black mr-2 px-2 py-1 rounded active-badge">
             Hoạt động
           </span></td>
         <ng-template #elseBlock>
-          <td class="border text-left p-10px whitespace-nowrap"><span
-              class="text-black mr-2 px-2.5 py-0.5 rounded inactive-badge">
+          <td class="border text-left p-td whitespace-nowrap"><span
+              class="text-black mr-2 px-2 py-1 rounded inactive-badge">
               Không Hoạt động
             </span></td>
         </ng-template>
         <td class="border text-left">
-          <div class="flex gap-3 p-10px justify-around m-auto">
+          <div class="flex gap-3 p-td justify-around m-auto">
             <button (click)="onOpenUpdateModal(highway.id)"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true" width="20">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -120,7 +135,7 @@
               </svg></button>
             <button (click)="onOpenDeleteModal(highway.id)">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" aria-hidden="true" color="red" width="20">
+                stroke="currentColor" aria-hidden="true" color="red" width="20" class="trashBin">
                 <path stroke-linecap="round" stroke-linejoin="round"
                   d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0">
                 </path>
@@ -230,6 +245,37 @@
             bỏ</button>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div class="flex justify-end gap-3">
+    <div class="flex gap-2 items-center">
+      <p>Hiển thị</p>
+      <select class="border rounded border-gray-300" name="page" id="page" [(ngModel)]="newMaxPageSize"
+        (ngModelChange)="onChangePageSize()">
+        <option value="15">15</option>
+        <option value="30">30</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+      <p>Dòng/Trang</p>
+    </div>
+    <div class="flex gap-2 items-center">
+      <button class="border w-8 h-8 rounded p-1 flex justify-center items-center" (click)="onPreviousPage()">
+        <svg width="calc(2rem / 2)" height="calc(2rem / 2)" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"
+          class="mantine-2jxpqh">
+          <path d="M7.219 8l3.3 3.3-.943.943L5.333 8l4.243-4.243.943.943-3.3 3.3z" fill="currentColor"></path>
+        </svg></button>
+      <button *ngFor="let page of pageIndexArray" (click)="onChangePage(page)"
+        class="bg-blue-700 hover:bg-blue-800 text-white w-8 h-8 p-1 rounded">
+        {{page}}
+      </button>
+      <button class="border w-8 h-8 rounded p-1 flex justify-center items-center" (click)="onNextPage()"><svg
+          width="calc(2rem / 2)" height="calc(2rem / 2)" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"
+          class="mantine-2jxpqh">
+          <path d="M8.781 8l-3.3-3.3.943-.943L10.667 8l-4.243 4.243-.943-.943 3.3-3.3z" fill="currentColor"></path>
+        </svg></button>
     </div>
   </div>
 </div>
