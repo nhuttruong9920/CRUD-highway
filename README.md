@@ -28,4 +28,4 @@ A demo CRUD from API using basic Angular.
 
 ## Usage
 
-![Alt text](/src/app/assets/screenshot.jpg?raw=true "Optional Title")
+![Alt text](/src/assets/screenshot.jpg?raw=true "Optional Title")
