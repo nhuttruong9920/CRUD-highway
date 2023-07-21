@@ -8,6 +8,7 @@ import { initFlowbite } from 'flowbite';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
+
 export class AppComponent {
   highways: Highway[] = [];
   highwaysAmount: number = 0;
@@ -28,7 +29,6 @@ export class AppComponent {
   pageIndexArray: number[] = [];
   newMaxPageSize = 15;
   newBodyKeyword = '';
-
   constructor(private highwayService: HighwayService) {}
 
   ngOnInit() {
@@ -99,7 +99,7 @@ export class AppComponent {
         } else if (this.body.sorting.includes('desc')) {
           this.body.sorting = '';
         }
-        this.onGetAllHighways();
+         this.onGetAllHighways();
         break;
       case 'description':
         if (this.body.sorting === '') {
